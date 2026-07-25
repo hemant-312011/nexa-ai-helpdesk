@@ -13,19 +13,23 @@ const PORT = process.env.PORT || 3000;
 
 const allowedOrigins = [
   "http://localhost:5173",
+  "https://nexa-ai-helpdesk.vercel.app",
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 
 app.use(
   cors({
     origin(origin, callback) {
+      // Postman, curl aur server-to-server requests me origin nahi hota.
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
         return;
       }
 
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error(`Origin ${origin} is not allowed by CORS`));
     },
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
   }),
 );
 
@@ -90,7 +94,13 @@ app.post("/api/chat", async (request, response) => {
 app.use((error, request, response, next) => {
   console.error("Server error:", error);
 
-  response.status(500).json({
+  if (error.message?.includes("CORS")) {
+    return response.status(403).json({
+      error: error.message,
+    });
+  }
+
+  return response.status(500).json({
     error: "Something went wrong.",
   });
 });
