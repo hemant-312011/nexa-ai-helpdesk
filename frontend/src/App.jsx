@@ -127,18 +127,21 @@ function App() {
     setIsTyping(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/chat", {
-        method: "POST",
+      const response = await fetch(
+        "https://nexa-ai-helpdesk.onrender.com/api/chat",
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            message: cleanText,
+            threadId,
+          }),
         },
-
-        body: JSON.stringify({
-          message: cleanText,
-          threadId,
-        }),
-      });
+      );
 
       const data = await response.json();
 
