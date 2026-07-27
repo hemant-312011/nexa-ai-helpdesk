@@ -132,7 +132,6 @@ npm run dev
 
 # 📸 Screenshots
 
-## 📸 Application Preview
 
 ### AI Helpdesk Chat Interface
 
