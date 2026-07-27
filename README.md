@@ -132,8 +132,6 @@ npm run dev
 
 # 📸 Screenshots
 
-> Add screenshots of your application here.
-
 ## 📸 Application Preview
 
 ### AI Helpdesk Chat Interface
